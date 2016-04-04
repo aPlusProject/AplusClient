@@ -14,17 +14,19 @@ import javax.swing.JButton;
 import javax.swing.JComponent;
 
 import java.awt.event.ActionListener;
+import java.sql.SQLException;
 import java.awt.event.ActionEvent;
 import javax.swing.JTextPane;
 import javax.swing.SwingUtilities;
 
 public class ConnectionPanel extends JFrame {
 
+	private static final String ALLCLIENTS = "allClientsDisplay";
 	private JPanel mainPanel = new JPanel();
+	private AllClientsDisplayPanel allClientsPanel;
 	private JButton connection = new JButton("Connexion");
 	   //private JButton exit = new JButton("Exit");
 	private JButton exit;
-	private JButton baz = new JButton("baz");
 
 	public ConnectionPanel() {
 	      mainPanel.setLayout(new FlowLayout());
@@ -38,7 +40,14 @@ public class ConnectionPanel extends JFrame {
 	      exit.addActionListener(new ActionListener() {
 	         @Override
 	         public void actionPerformed(ActionEvent e) {
-	            Window win = SwingUtilities.getWindowAncestor(mainPanel);
+	        	 System.out.println("ConnectionPanel");
+	        	 try {
+					allClientsPanel = new AllClientsDisplayPanel();
+				} catch (ClassNotFoundException | SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+	            Window win = SwingUtilities.getWindowAncestor(allClientsPanel.getMainComponent());
 	            win.dispose();
 	         }
 	      });
