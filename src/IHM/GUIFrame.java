@@ -33,6 +33,7 @@ public class GUIFrame extends JFrame {
 	private static final String DELETECLIENT = "deleteClientDisplay";
 	private static final String UPDATECLIENT = "updateClientDisplay";
 	private static final String CREATECLIENT = "createClientDisplay";
+	private static final String SEEALLCLIENTS = "AllClients";
 	private ConnectionPanel coPanel = new ConnectionPanel();
 	
 	private static EmployeePanel employeePanel;
@@ -40,6 +41,9 @@ public class GUIFrame extends JFrame {
 	private static DeleteClientPanel deleteClientPanel;
 	private static UpdateClientPanel updateClientPanel;
 	private static CreateClientPanel createClientPanel;
+	private static DisplayClientsPanel displayClientsPanel;
+	
+	private Employee employee;
 	
 	private CardLayout cardlayout = new CardLayout();
 	private JPanel mainPanel = new JPanel(cardlayout);
@@ -56,6 +60,7 @@ public class GUIFrame extends JFrame {
 		deleteClientPanel = new DeleteClientPanel();
 		updateClientPanel = new UpdateClientPanel();
 		createClientPanel = new CreateClientPanel();
+		displayClientsPanel = new DisplayClientsPanel();
 		
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -91,6 +96,7 @@ public class GUIFrame extends JFrame {
 		mainPanel.add(deleteClientPanel.getMainComponent(), DELETECLIENT);
 		mainPanel.add(updateClientPanel.getMainComponent(), UPDATECLIENT);
 		mainPanel.add(createClientPanel.getMainComponent(), CREATECLIENT);
+		mainPanel.add(displayClientsPanel.getMainComponent(), SEEALLCLIENTS);
 		
 		
 		coPanel.addConnectionActionListener(new ActionListener() {
@@ -107,7 +113,7 @@ public class GUIFrame extends JFrame {
 				if (localAdr != null) {
 					
 					try {
-						sck = new SocketClient(localAdr.getHostAddress(),167);
+						sck = new SocketClient(localAdr.getHostAddress(),179);
 						sck.send("1");
 						System.out.println(System.getProperty("user.dir"));
 						try(ObjectInputStream input = new ObjectInputStream(new FileInputStream(new File("C:\\Users\\asus\\git\\under\\AplusClient\\arrayclient.tmp")))) {
@@ -115,7 +121,15 @@ public class GUIFrame extends JFrame {
 							ArrayList<Client> array =  (ArrayList<Client>) input.readObject();
 							Employee em = new Employee();
 							em.setAllClients(array);
-							allClientsPanel.addObjectEmployee(em);
+							System.out.println(em.getAllClients().get(1).getLastName());
+							em.getAllClients().get(1).getLastName();
+							//allClientsPanel.addObjectEmployee(em);
+							employee = em;
+							ArrayList<Client> listClients = employee.getAllClients();
+							for(int i = 0; i<listClients.size(); i++) {
+								System.out.println(listClients.get(i).getID()+" / "+listClients.get(i).getFirstName()+" / "+listClients.get(i).getLastName()+" / "+listClients.get(i).getEmail());
+								
+							}
 							
 						}
 						//ObjectInputStream input = new ObjectInputStream(new FileInputStream("arrayclient.tmp"))
@@ -191,6 +205,25 @@ public class GUIFrame extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				cardlayout.show(mainPanel, EMPLOYEEPANEL);
+				
+			}
+			
+		});
+		
+		allClientsPanel.addDisplayClientsActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				cardlayout.show(mainPanel, SEEALLCLIENTS);
+			}
+			
+		});
+		
+		displayClientsPanel.addAfficherBtnActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				cardlayout.show(mainPanel, SEEALLCLIENTS);
 				
 			}
 			

@@ -32,6 +32,7 @@ public class AllClientsDisplayPanel {
     
 	
 	private JButton retour;
+	private JButton displayClients;
 	private static JTextField idArea;
 
 	
@@ -84,8 +85,26 @@ public class AllClientsDisplayPanel {
     	tableClient = modelEmployee.getArrayOfClients();
     	entete = modelEmployee.getEntete();*/
     	
-    	EmployeePanelModel modelEmployee = new EmployeePanelModel();
-    	modelEmployee.setArrayOfClients(employee);
+    	
+		
+		retour = new JButton("Retour");
+	    displayClients = new JButton("Afficher tous les clients");
+		
+		//mainPanel.add(idArea);
+		mainPanel.add(retour);
+		mainPanel.add(displayClients);
+		//mainPanel.setPreferredSize(MAIN_SIZE);
+	}
+	
+	public void addComponent() throws ClassNotFoundException, SQLException {
+		EmployeePanelModel modelEmployee = new EmployeePanelModel();
+    	if (this.employee == null) {
+    		System.out.println("Object employee is null");
+    	}
+    	else {
+    		System.out.println("Objet employee recu");
+    	}
+    	modelEmployee.setArrayOfClients(this.employee);
     	tableClient = modelEmployee.getArrayOfClients();
     	entete = modelEmployee.getEntete();
 		
@@ -97,11 +116,8 @@ public class AllClientsDisplayPanel {
           }
         JTable endTable = new JTable(tempTable,tempEntete);
 		
-		retour = new JButton("Retour");
 		mainPanel.add(endTable);
-		mainPanel.add(idArea);
-		mainPanel.add(retour);
-		//mainPanel.setPreferredSize(MAIN_SIZE);
+		mainPanel.updateUI();
 	}
 	
 	public JComponent getMainComponent() {
@@ -112,6 +128,10 @@ public class AllClientsDisplayPanel {
 	      retour.addActionListener(listener);
 	}
 	
+	public void addDisplayClientsActionListener(ActionListener listener) {
+		displayClients.addActionListener(listener);
+	}
+	
 	public void setArrayList(Employee e) {
 		this.employee = e;
 		
@@ -120,7 +140,9 @@ public class AllClientsDisplayPanel {
 	
 
 	public void addObjectEmployee(Employee e) {
-		this.employee = e;		
+		System.out.println("object employee send via AllClientsDisplayPanel");
+		this.employee = e;
+		
 	}
 		
 

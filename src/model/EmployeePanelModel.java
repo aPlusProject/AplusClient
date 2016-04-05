@@ -7,7 +7,7 @@ import java.net.UnknownHostException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-import client.Client;
+import model.Client;
 import socket.SocketClient;
 
 //import model.Client;
@@ -112,7 +112,9 @@ public class EmployeePanelModel {
 	
 	public void setArrayOfClients(Employee employee) throws ClassNotFoundException, SQLException {
 		
-		ArrayList<model.Client> arrayClient = employee.getAllClients();
+		System.out.println(employee.getAllClients().get(1).getLastName());
+		
+		ArrayList<Client> arrayClient = employee.getAllClients();
 		
 		this.clientArray = new ArrayList<ArrayList<String>>();
 		for(int i=0; i< arrayClient.size(); i++) {
