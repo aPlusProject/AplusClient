@@ -14,6 +14,8 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
+import model.Employee;
+
 public class EmployeePanel {
 	
 	private static final String ALLCLIENTS = "allClientsDisplay";
@@ -28,6 +30,8 @@ public class EmployeePanel {
 	private JButton deleteClient;
 	private JButton updateClient;
 	private JButton insertClient;
+	
+	private Employee employee;
 
     //launch the application
     public static void main(String[] args) throws ClassNotFoundException, SQLException, IOException {
@@ -102,6 +106,10 @@ public class EmployeePanel {
 	
 	public void addUpdateClientBtnActionListener(ActionListener listener) {
 	      updateClient.addActionListener(listener);
+	}
+	
+	public void addEmployeeObject(Employee e) {
+		this.employee = e;
 	}
 	
 	

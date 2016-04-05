@@ -5,10 +5,14 @@ import java.awt.CardLayout;
 import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 import javax.swing.JComponent;
 import javax.swing.JFrame;
@@ -16,6 +20,8 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.border.EmptyBorder;
 
+import model.Client;
+import model.Employee;
 import socket.SocketClient;
 
 public class GUIFrame extends JFrame {
@@ -101,9 +107,24 @@ public class GUIFrame extends JFrame {
 				if (localAdr != null) {
 					
 					try {
-						sck = new SocketClient(localAdr.getHostAddress(),143);
+						sck = new SocketClient(localAdr.getHostAddress(),167);
 						sck.send("1");
-						sck.receive();
+						System.out.println(System.getProperty("user.dir"));
+						try(ObjectInputStream input = new ObjectInputStream(new FileInputStream(new File("C:\\Users\\asus\\git\\under\\AplusClient\\arrayclient.tmp")))) {
+							System.out.println("lecture done");
+							ArrayList<Client> array =  (ArrayList<Client>) input.readObject();
+							Employee em = new Employee();
+							em.setAllClients(array);
+							allClientsPanel.addObjectEmployee(em);
+							
+						}
+						//ObjectInputStream input = new ObjectInputStream(new FileInputStream("arrayclient.tmp"))
+						catch (ClassNotFoundException e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+						}
+						
+						//sck.receive();
 					} catch (UnknownHostException e1) {
 						e1.printStackTrace();
 					} catch (IOException e1) {

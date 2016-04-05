@@ -22,6 +22,11 @@ public class EmployeePanelModel {
 	private ArrayList<ArrayList<String>> clientArray;
 	private ArrayList<ArrayList<String>> finalClientArray;
 	private SocketClient sck;
+	private ArrayList<Client> arrayOfClient;
+	
+	public EmployeePanelModel() {
+		
+	}
 	
 	/**
 	 * 
@@ -99,11 +104,39 @@ public class EmployeePanelModel {
 		 * 
 		 */
 		
+		/*this.finalClientArray = new ArrayList<ArrayList<String>>();
+		for(int i=0;i<this.clientArray.size();i++) {
+			this.finalClientArray.add(this.clientArray.get(i));
+        }*/
+	}
+	
+	public void setArrayOfClients(Employee employee) throws ClassNotFoundException, SQLException {
+		
+		ArrayList<model.Client> arrayClient = employee.getAllClients();
+		
+		this.clientArray = new ArrayList<ArrayList<String>>();
+		for(int i=0; i< arrayClient.size(); i++) {
+			this.aClient = new ArrayList<String>();
+        	this.aClient.add(arrayClient.get(i).getFirstName());
+        	this.aClient.add(arrayClient.get(i).getLastName());
+        	this.aClient.add(arrayClient.get(i).getID()+"");
+        	this.clientArray.add(aClient);
+			
+		}
+		
 		this.finalClientArray = new ArrayList<ArrayList<String>>();
 		for(int i=0;i<this.clientArray.size();i++) {
 			this.finalClientArray.add(this.clientArray.get(i));
         }
+        	
 	}
+	
+	
+	
+	public Object getObject() {
+		return arrayOfClient;
+	}
+	
 	
 	/**
 	 * @return all clients
@@ -119,4 +152,6 @@ public class EmployeePanelModel {
 	public ArrayList<String> getEntete() {
 		return this.entete;
 	}
+	
+	
 }
